@@ -1,0 +1,26 @@
+CoW - a binary disk emulator written in Zig and C
+
+CoW is an in-house, hash-based filesystem designed to provide a high-level zig
+interface, while utilizing low-level performant C code to achieve higher
+performance.
+
+Filenames
+  There is no concepts of filenames nor directories in CoW, which limits
+  compatibility with other filesystems, since CoW is a research filesystem.,
+  this isn't a big deal.
+
+  Files have the following properties:
+
+      struct cow_inode
+      {
+        int32_t dir;                 // the directory this file is in
+        int32_t name;                // the name of the file
+        int32_t link;                // the link to another file (it's name hashed)
+        int32_t data[MAX_FILE_SIZE]; // the file's contents
+        int32_t corrupt;             // whether the inode is corrupted
+        uint32_t size;               // the size of the file
+
+        enum cow_inode_t ftype; // the type of the inode
+      }; 
+
+  Some unused, but will be in the future.
